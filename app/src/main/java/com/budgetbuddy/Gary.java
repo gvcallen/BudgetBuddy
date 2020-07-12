@@ -7,12 +7,19 @@ public class Gary
 	// Second comment from Gary
     // Comment from Sean
     // Comment gang4life
-    // Shanks was here
+
 	public void setName(String name)
 	{
 		mName = name;
 	}
 
+
 }
 
+
+
+class Sean
+{
+
+}
 
