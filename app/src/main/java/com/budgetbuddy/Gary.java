@@ -25,5 +25,15 @@ class Sean
 	{
 		mAge=age;
 	}
+
+	Sean()
+	{
+		
+	}
+}
+
+class Shanks
+{
+
 }
 
