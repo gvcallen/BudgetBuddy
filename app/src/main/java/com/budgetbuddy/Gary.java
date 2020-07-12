@@ -20,6 +20,10 @@ public class Gary
 
 class Sean
 {
-
+	int mAge;
+	public void setAge(int age)
+	{
+		mAge=age;
+	}
 }
 
