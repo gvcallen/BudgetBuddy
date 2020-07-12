@@ -7,3 +7,8 @@ public class Gary
     // Comment from Sean
     // Comment gang4life
 }
+
+class Sean
+{
+
+}
