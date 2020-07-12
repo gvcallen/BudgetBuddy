@@ -37,3 +37,7 @@ class Shanks
 	int sum = 1+2;
 }
 
+class Gary2
+{
+	int mySum = 1 + 1;
+}
