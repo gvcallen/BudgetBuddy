@@ -23,3 +23,8 @@ class Sean
 
 }
 
+class Shanks
+{
+	
+}
+
