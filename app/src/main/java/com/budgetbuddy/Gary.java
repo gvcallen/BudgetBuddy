@@ -12,15 +12,8 @@ public class Gary
 	{
 		mName = name;
 	}
-<<<<<<< HEAD
 }
 
-
-=======
-    // Shanks was here
-	
-}
->>>>>>> 55f9de54ffb501358cc3db3011f953ecc2c8c327
 class Sean
 {
 
