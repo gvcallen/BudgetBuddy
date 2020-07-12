@@ -20,6 +20,9 @@ public class Gary
 
 class Sean
 {
-
+	Sean()
+	{
+		
+	}
 }
 
