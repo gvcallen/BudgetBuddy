@@ -34,6 +34,6 @@ class Sean
 
 class Shanks
 {
-	int sum = 1+1;
+	int sum = 1+2;
 }
 
