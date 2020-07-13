@@ -13,7 +13,6 @@ User
     Methods:
         Constructor             User(int ID, String name, String surname, int income, ArrayList<Category> categories)
         int                     getID()
-        void                    setID(int)
         String                  getName()
         void                    setName(String)
         String                  getSurname()
