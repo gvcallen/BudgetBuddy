@@ -43,9 +43,9 @@ Transaction
     Criteria:
         - Stores information about a single transaction
     Methods:
-        Constructor             Transaction(Calendar date, int amount, String location)
-        Calendar                getDate()
-        void                    setDate(Calendar)
+        Constructor             Transaction(LocalDate date, int amount, String location)
+        LocalDate 		getDate()
+        void                    setDate(LocalDate)
         int                     getAmount()
         void                    setAmount(int)
         String                  getLocation()
