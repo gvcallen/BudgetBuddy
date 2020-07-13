@@ -2,6 +2,7 @@ Data
     Criteria:
         - Reads the user data from a JSON file, returning a user object
         - Saves a user object a JSON file
+        - Should be declared final, have its constructor marked private, and have all its methods marked private
     Methods:
         User                    readUser()
         void                    saveUser(User)
@@ -10,6 +11,7 @@ User
     Criteria:
         - Stores information about a user and the list of categories they have made
     Methods:
+        Constructor             User(int ID, String name, String surname, ArrayList<Category> categories, int income)
         int                     getID()
         void                    setID(int)
         String                  getName()
@@ -26,6 +28,7 @@ Category
         - Stores information about a single category and all of its transactions
         - Continuosly ensures the list of transactions is sorted by date
     Methods:
+        Constructor             Category(String type, ArrayList<Transaction> transactions, int budget)
         String                  getType()
         void                    setType(string)
         ArrayList<Transaction>  getTransactions()
@@ -39,6 +42,7 @@ Transaction
     Criteria:
         - Stores information about a single transaction
     Methods:
+        Constructor             Transaction(Calendar date, int amount, String location)
         Calendar                getDate()
         void                    setDate(Calendar)
         int                     getAmount()
