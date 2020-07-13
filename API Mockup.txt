@@ -11,7 +11,7 @@ User
     Criteria:
         - Stores information about a user and the list of categories they have made
     Methods:
-        Constructor             User(int ID, String name, String surname, ArrayList<Category> categories, int income)
+        Constructor             User(int ID, String name, String surname, int income, ArrayList<Category> categories)
         int                     getID()
         void                    setID(int)
         String                  getName()
@@ -28,7 +28,7 @@ Category
         - Stores information about a single category and all of its transactions
         - Continuosly ensures the list of transactions is sorted by date
     Methods:
-        Constructor             Category(String type, ArrayList<Transaction> transactions, int budget)
+        Constructor             Category(String type, int budget, ArrayList<Transaction> transactions)
         String                  getType()
         void                    setType(string)
         ArrayList<Transaction>  getTransactions()
