@@ -33,7 +33,7 @@ Category
         void                    setType(string)
         ArrayList<Transaction>  getTransactions()
         void                    addTransaction(Transaction)
-        void                    removeTransaction(Transaction)
+        void                    removeTransaction(int)
         void                    editTransaction(int, Transaction)
         int                     getBudget()
         void                    setBudget()
