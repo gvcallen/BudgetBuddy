@@ -1,0 +1,56 @@
+Data
+    Criteria:
+        - Reads the user data from a JSON file, returning a user object
+        - Saves a user object a JSON file
+    Methods:
+        User                    readUser()
+        void                    saveUser(User)
+
+User
+    Criteria:
+        - Stores information about a user and the list of categories they have made
+    Methods:
+        int                     getID()
+        void                    setID(int)
+        String                  getName()
+        void                    setName(String)
+        String                  getSurname()
+        void                    setSurname(String)
+        ArrayList<Category>     getCategories()
+        void                    setCategories(ArrayList<Category>)  
+        int                     getIncome()
+        void                    setIncome(int)
+
+Category
+    Criteria:
+        - Stores information about a single category and all of its transactions
+        - Continuosly ensures the list of transactions is sorted by date
+    Methods:
+        String                  getType()
+        void                    setType(string)
+        ArrayList<Transaction>  getTransactions()
+        void                    addTransaction(Transaction)
+        void                    removeTransaction(Transaction)
+        void                    editTransaction(int, Transaction)
+        int                     getBudget()
+        void                    setBudget()
+
+Transaction
+    Criteria:
+        - Stores information about a single transaction
+    Methods:
+        Calendar                getDate()
+        void                    setDate(Calendar)
+        int                     getAmount()
+        void                    setAmount(int)
+        String                  getLocation()
+        void                    setLocation(String)
+
+Process
+    Criteria:
+        - Performs calculations on a list of categories and a list of transactions
+        - Should be declared final, have its constructor marked private, and have all its methods marked private
+    Methods:
+        int                     calculateTotalSpent(ArrayList<Category>, TIME_PERIOD)
+        int                     calculateTotalSpent(ArrayList<Transaction>, TIME_PERIOD)
+        ArrayList<int>          calculateDistribution(ArrayList<Category>, TIME_PERIOD)
