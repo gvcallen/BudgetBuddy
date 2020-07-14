@@ -6,6 +6,7 @@ Data
     Methods:
         User                    readUser()
         void                    saveUser(User)
+	bool			fileExists()
 
 User
     Criteria:
