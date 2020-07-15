@@ -2,9 +2,13 @@ package com.budgetbuddy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 //import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
 
@@ -13,6 +17,7 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
+import com.anychart.core.utils.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 	AnyChartView pieChart;
 	String[] categories = {"Food", "Rent", "Leisure", "Utilities"} ;
 	int[] amounts = {3000, 8000, 1000, 2000 } ;
+	Button btn_Add;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -36,6 +42,15 @@ public class MainActivity extends AppCompatActivity
 		//toolbar
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		//code to change to input activity
+		btn_Add = (Button)findViewById(R.id.btnAdd);
+		btn_Add.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				changeActivity();
+			}
+		});
 	}
 
 	@Override
@@ -62,6 +77,13 @@ public class MainActivity extends AppCompatActivity
 		pie.data(dataEntries);
 		pie.title("Monthly Spending");
 		pieChart.setChart(pie);
+
+	}
+
+	public void changeActivity()
+	{
+		Intent intent = new Intent(this, InputActivity.class);
+		startActivity(intent);
 
 	}
 }
