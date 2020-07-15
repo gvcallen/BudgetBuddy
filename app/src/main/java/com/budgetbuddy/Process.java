@@ -1,3 +1,5 @@
+package com.budgetbuddy;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ public class Process
 {
 
     private Process(){}
-    
+
     public static double calculateTotalSpentPerCategory(ArrayList<Transaction> arrayList2, int TIME_PERIOD)
     {
         double total = 0;
