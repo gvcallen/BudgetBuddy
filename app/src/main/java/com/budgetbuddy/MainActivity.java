@@ -1,5 +1,6 @@
 package com.budgetbuddy;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,9 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-//import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
 
 import com.anychart.AnyChart;
@@ -17,7 +16,6 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
-import com.anychart.core.utils.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,65 +23,107 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
-	AnyChartView pieChart;
-	String[] categories = {"Food", "Rent", "Leisure", "Utilities"} ;
-	int[] amounts = {3000, 8000, 1000, 2000 } ;
-	Button btn_Add;
+	// Variables
+	private AnyChartView mPieChart;
+	private String[] mCategories = {"Food", "Rent", "Leisure", "Utilities"} ;
+	private int[] mAmounts = {3000, 8000, 1000, 2000 } ;
+	private Button btnAdd;
+	public static User mUser;
+
+	// Constants
+	public static final int REQUEST_SETUP = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
 
-		//implementing piechart
-		pieChart = findViewById(R.id.piChart);
-		setupPieChart();
+		// Check if user file exists. If yes, initialize this activity, else open the setup activity
+		boolean fileExists = true;
+		if (fileExists)
+		{
+			init();
+		}
+		else
+		{
+			startSetupActivity();
+		}
+	}
 
-		//toolbar
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
 
-		//code to change to input activity
-		btn_Add = (Button)findViewById(R.id.btnAdd);
-		btn_Add.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				changeActivity();
+		if (requestCode == REQUEST_SETUP)
+		{
+			if (resultCode == RESULT_OK)
+			{
+				init();
 			}
-		});
+			else
+			{
+				finish();
+			}
+		}
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		//This is the method to add the settings button on the top right it fetches the menu layout in the menu directory
+		// Add the settings button on the top right, fetching the menu layout resource
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu_homepage,menu);
 		return true;
 	}
 
+	public void init()
+	{
+		setContentView(R.layout.activity_main);
 
+		// Implement pie-chart
+		mPieChart = findViewById(R.id.piChart);
+		setupPieChart();
+
+		// Create toolbar
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		// Set buttons on click listener to open transaction activity
+		btnAdd = (Button)findViewById(R.id.btnAdd);
+		btnAdd.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startTransactionActivity();
+			}
+		});
+	}
 
 	public void setupPieChart()
 	{
 		Pie pie = AnyChart.pie();
 		List<DataEntry> dataEntries = new ArrayList<>();
 
-			for (int i=0; i<categories.length;i++)
+			for (int i=0; i<mCategories.length;i++)
 			{
-				dataEntries.add(new ValueDataEntry(categories[i], amounts[i]));
+				dataEntries.add(new ValueDataEntry(mCategories[i], mAmounts[i]));
 			}
 
 		pie.data(dataEntries);
 		pie.title("Monthly Spending");
-		pieChart.setChart(pie);
+		mPieChart.setChart(pie);
 
 	}
 
-	public void changeActivity()
+	public void startTransactionActivity()
 	{
 		Intent intent = new Intent(this, InputActivity.class);
 		startActivity(intent);
+	}
 
+	public void startSetupActivity()
+	{
+		// Intent intent = new Intent(this, SetupActivity.class);
+		// startActivityForResult(intent, REQUEST_SETUP);
 	}
 }
