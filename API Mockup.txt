@@ -2,16 +2,18 @@ Data
     Criteria:
         - Reads the user data from a JSON file, returning a user object
         - Saves a user object a JSON file
+        - Should be declared final, have its constructor marked private, and have all its methods marked private
     Methods:
         User                    readUser()
         void                    saveUser(User)
+	bool			fileExists()
 
 User
     Criteria:
         - Stores information about a user and the list of categories they have made
     Methods:
+        Constructor             User(int ID, String name, String surname, int income, ArrayList<Category> categories)
         int                     getID()
-        void                    setID(int)
         String                  getName()
         void                    setName(String)
         String                  getSurname()
@@ -26,12 +28,14 @@ Category
         - Stores information about a single category and all of its transactions
         - Continuosly ensures the list of transactions is sorted by date
     Methods:
+        Constructor             Category(String type, int budget, ArrayList<Transaction> transactions)
         String                  getType()
         void                    setType(string)
         ArrayList<Transaction>  getTransactions()
         void                    addTransaction(Transaction)
-        void                    removeTransaction(Transaction)
+        void                    removeTransaction(int)
         void                    editTransaction(int, Transaction)
+	Transaction		getTransaction(int)
         int                     getBudget()
         void                    setBudget()
 
@@ -39,8 +43,9 @@ Transaction
     Criteria:
         - Stores information about a single transaction
     Methods:
-        Calendar                getDate()
-        void                    setDate(Calendar)
+        Constructor             Transaction(LocalDate date, int amount, String location)
+        LocalDate 		getDate()
+        void                    setDate(LocalDate)
         int                     getAmount()
         void                    setAmount(int)
         String                  getLocation()
