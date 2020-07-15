@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 
 		// Check if user file exists. If yes, initialize this activity, else open the setup activity
-		boolean fileExists = true;
+		boolean fileExists = false;
 		if (fileExists)
 		{
 			init();
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity
 
 	public void startSetupActivity()
 	{
-		// Intent intent = new Intent(this, SetupActivity.class);
-		// startActivityForResult(intent, REQUEST_SETUP);
+		Intent intent = new Intent(this, SetupActivity.class);
+		startActivityForResult(intent, REQUEST_SETUP);
 	}
 }
