@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity
 		mUser = new User(0, "John", "Doe", 25000, categories);
 
 		// Check if user file exists. If yes, initialize this activity, else open the setup activity
-		boolean fileExists = true;
+		boolean fileExists = false;
 		if (fileExists)
 		{
 			init();
