@@ -20,11 +20,11 @@ public class InputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
-                    //code to make drop down menu
-                    textInputLayout2 = findViewById(R.id.txt_InputLayout_2);
-                    drop_Down_Text = findViewById(R.id.dropdown_text);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item, categories);
-                    drop_Down_Text.setAdapter(adapter);
+        // Code to make drop down menu
+        textInputLayout2 = findViewById(R.id.txt_InputLayout_2);
+        drop_Down_Text = findViewById(R.id.dropdown_text);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item, categories);
+        drop_Down_Text.setAdapter(adapter);
 
     }
 }
