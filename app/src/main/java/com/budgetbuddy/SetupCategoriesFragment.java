@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class SetupCategoriesFragment extends Fragment
 				trySwipe();
 			}
 		});
+		tvCategories.setText(Html.fromHtml("BudgetBuddy works with <b>categories</b>, allowing you to easily sort your transactions.<br></br><br></br>We've set up a few basic ones for you below. Feel free to customize them to your needs."));
 
 		return rootView;
 	}

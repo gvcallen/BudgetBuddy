@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Please enter amount you spent"
+        android:hint="Enter the amount you spent..."
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/colorAccent"
         app:hintTextColor="@color/colorAccent"
@@ -48,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:hint="Please enter what category you spent money on"
+        android:hint="Select a category..."
         app:endIconMode="dropdown_menu"
         app:boxBackgroundMode="outline"
         app:boxStrokeColor="@color/colorAccent"
@@ -64,7 +64,8 @@
         <AutoCompleteTextView
             android:id="@+id/dropdown_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:editable="false" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
