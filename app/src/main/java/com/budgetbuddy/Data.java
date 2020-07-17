@@ -48,9 +48,9 @@ final public class Data
     }
 
     // Checks if a file exists
-    public static boolean fileExists(Context context, String filename)
+    public static boolean fileExists(Context context)
     {
-        File file = context.getFileStreamPath(filename);
+        File file = context.getFileStreamPath(fileName);
         if(file == null || !file.exists())
         {
             return false;
