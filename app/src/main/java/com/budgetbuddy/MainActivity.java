@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +29,6 @@ public class MainActivity extends AppCompatActivity
 {
 	// Variables
 	private AnyChartView mPieChart;
-	private String[] mCategories = {"Food", "Rent", "Leisure", "Utilities"} ;
-	private int[] mAmounts = {3000, 8000, 1000, 2000 } ;
 	private Button btnAdd;
 	public static User mUser;
 
@@ -108,16 +108,17 @@ public class MainActivity extends AppCompatActivity
 
 	public void setupPieChart()
 	{
+		ArrayList string = new ArrayList();
+		ArrayList amount = new ArrayList();
 		Pie pie = AnyChart.pie();
 		List<DataEntry> dataEntries = new ArrayList<>();
 
-
-			for (int i=0; i<mCategories.length;i++)
+			for(Category category:mUser.getCategories())
 			{
-
+				dataEntries.add(new ValueDataEntry(category.getType(), /*get amount*/));
 			}
 
-		pie.data();
+		pie.data(dataEntries);
 		pie.title("Monthly Spending");
 		mPieChart.setChart(pie);
 
