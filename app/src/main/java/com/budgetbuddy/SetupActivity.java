@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-public class SetupActivity extends AppCompatActivity
+public class  SetupActivity extends AppCompatActivity
 {
 	// Variables
 	private CustomViewPager mPager;
