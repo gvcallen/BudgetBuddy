@@ -8,18 +8,31 @@ import java.util.ArrayList;
 
 public class Process
 {
-
     private Process(){}
 
-    public static int calculateTotalSpentPerCategory(ArrayList<Transaction> transactions, int periodInDays)
+    public static final int ABSOLUTE_TOTAL = -1;
+
+    // -1 may be passed for periodInDays, in which case the absolute total will be calculated
+
+    public static int calculateTotalSpentPerCategory(Category category, int periodInDays)
     {
         int total = 0;
 
-        for(Transaction transaction: transactions)
+        if (periodInDays == ABSOLUTE_TOTAL)
         {
-            if(Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
+            for (Transaction transaction: category.getTransactions())
             {
                 total += transaction.getAmount();
+            }
+        }
+        else
+        {
+            for (Transaction transaction: category.getTransactions())
+            {
+                if (Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
+                {
+                    total += transaction.getAmount();
+                }
             }
         }
         return total;
@@ -32,31 +45,31 @@ public class Process
 
         for(Category category: categories)
         {
-            total += calculateTotalSpentPerCategory(category.getTransactions(), periodInDays);
+            total += calculateTotalSpentPerCategory(category, periodInDays);
         }
         return total;
     }
 
-    public static ArrayList<Double> calculateDistribution(ArrayList<Category> arrayList, ArrayList<Transaction> arrayList2, int TIME_PERIOD)
+    public static ArrayList<Double> calculateDistribution(ArrayList<Category> categories, int periodInDays)
     {
         double overallTotal = 0;
         double temp = 0;
         ArrayList<Double> categoryTotals = new ArrayList<Double>();
-        ArrayList<Double> distribution = new ArrayList<Double>();
+        ArrayList<Double> fractionDistribution = new ArrayList<Double>();
 
-        for(Category i: arrayList)
+        for(Category category: categories)
         {
-            temp = calculateTotalSpentPerCategory(arrayList2, TIME_PERIOD);
+            temp = calculateTotalSpentPerCategory(category, periodInDays);
             categoryTotals.add(temp);
             overallTotal += temp;
         }
 
-        for(double j: categoryTotals)
+        for(double i: categoryTotals)
         {
-            distribution.add(j/overallTotal);
+            fractionDistribution.add(i / overallTotal);
         }
 
-        return distribution;
+        return fractionDistribution;
     }
 
 
