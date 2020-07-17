@@ -38,6 +38,7 @@ final public class Data
         json=jsonFormat(json);
         return gson.fromJson(json,User.class);
     }
+    
     // Overwrites the json file and stores a new user object
     public static void saveUser(User user, Context context)
     {
