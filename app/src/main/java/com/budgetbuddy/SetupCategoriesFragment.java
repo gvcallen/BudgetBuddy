@@ -3,7 +3,10 @@ package com.budgetbuddy;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +14,19 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 
 public class SetupCategoriesFragment extends Fragment
 {
+	// Variables
 	private View rootView;
 	private TextView tvCategories;
 	private Button btnNext;
+	private ArrayList<Category> categories;
+	private RecyclerView rvCategories;
+	private RecyclerView.Adapter rvAdapter;
+	private RecyclerView.LayoutManager rvLayoutManager;
 
 	public SetupCategoriesFragment()
 	{
@@ -24,11 +34,6 @@ public class SetupCategoriesFragment extends Fragment
 	}
 	public static SetupCategoriesFragment newInstance()
 	{
-		//SetupUserFragment fragment = new SetupUserFragment();
-		//Bundle args = new Bundle();
-		/*args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);*/
-		//fragment.setArguments(args);
 		return new SetupCategoriesFragment();
 	}
 
@@ -36,11 +41,6 @@ public class SetupCategoriesFragment extends Fragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		/*if (getArguments() != null)
-		{
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}*/
 	}
 
 	@Override
@@ -59,6 +59,20 @@ public class SetupCategoriesFragment extends Fragment
 				trySwipe();
 			}
 		});
+		tvCategories.setText(Html.fromHtml("BudgetBuddy works with <b>categories</b>,<br></br>allowing you to easily sort your transactions.<br></br><br></br>We've set up a few basic ones below.<br></br>Please enter your estimated monthly budget for each.<br></br><br></br>Don't worry - you'll be able to change these later."));
+
+		categories = new ArrayList<>();
+		categories.add(new Category("Food", 0, new ArrayList<Transaction>()));
+		categories.add(new Category("Rent", 0, new ArrayList<Transaction>()));
+		categories.add(new Category("Leisure", 0, new ArrayList<Transaction>()));
+		categories.add(new Category("Utilities", 0, new ArrayList<Transaction>()));
+
+		rvCategories.setHasFixedSize(true);
+		rvLayoutManager = new LinearLayoutManager(getContext());
+		rvAdapter = new CategoryAdapter(categories);
+
+		rvCategories.setLayoutManager(rvLayoutManager);
+		rvCategories.setAdapter(rvAdapter);
 
 		return rootView;
 	}
@@ -67,13 +81,25 @@ public class SetupCategoriesFragment extends Fragment
 	{
 		tvCategories = rootView.findViewById(R.id.tvCategories);
 		btnNext = rootView.findViewById(R.id.btnFinish);
+		rvCategories = rootView.findViewById(R.id.rvCategories);
 	}
 
 	private void trySwipe()
 	{
-		// if validation succeeds
+		for (int i = 0; i < categories.size(); i++)
+		{
+			String value = ((TextView) rvCategories.findViewHolderForAdapterPosition(i).itemView.findViewById(R.id.edtAmount)).getText().toString();
+			if (value.isEmpty())
+			{
+				Toast.makeText(getContext(), "No value may be empty.", Toast.LENGTH_LONG).show();
+				return;
+			}
+			else
+			{
+				categories.get(i).setBudget(Integer.parseInt(value));
+			}
+		}
+		MainActivity.mUser.setCategories(categories);
 		((SetupActivity)getActivity()).swipeRight();
-		// else
-		Toast.makeText(getActivity(), "Incorrect information entered. Please try again.", Toast.LENGTH_LONG).show();
 	}
 }

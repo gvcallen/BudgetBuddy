@@ -38,11 +38,20 @@ public class MainActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 
+		// Create a dummy user (NOTE: This will be replaced with the user that gets loaded from file
+		ArrayList<Category> categories = new ArrayList<Category>();
+		categories.add(new Category("Food", 3000, new ArrayList<Transaction>()));
+		categories.add(new Category("Rent", 8000, new ArrayList<Transaction>()));
+		categories.add(new Category("Leisure", 1000, new ArrayList<Transaction>()));
+		categories.add(new Category("Utilities", 2000, new ArrayList<Transaction>()));
+		mUser = new User(0, "John", "Doe", 25000, categories);
+
 		// Check if user file exists. If yes, initialize this activity, else open the setup activity
-		boolean fileExists = false;
+		boolean fileExists = true;
 		if (fileExists)
 		{
 			init();
+
 		}
 		else
 		{
@@ -104,12 +113,13 @@ public class MainActivity extends AppCompatActivity
 		Pie pie = AnyChart.pie();
 		List<DataEntry> dataEntries = new ArrayList<>();
 
+
 			for (int i=0; i<mCategories.length;i++)
 			{
-				dataEntries.add(new ValueDataEntry(mCategories[i], mAmounts[i]));
+
 			}
 
-		pie.data(dataEntries);
+		pie.data();
 		pie.title("Monthly Spending");
 		mPieChart.setChart(pie);
 

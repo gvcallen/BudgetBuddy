@@ -26,11 +26,6 @@ public class SetupUserFragment extends Fragment
 	}
 	public static SetupUserFragment newInstance()
 	{
-		//SetupUserFragment fragment = new SetupUserFragment();
-		//Bundle args = new Bundle();
-		/*args.putString(ARG_PARAM1, param1);
-		args.putString(ARG_PARAM2, param2);*/
-		//fragment.setArguments(args);
 		return new SetupUserFragment();
 	}
 
@@ -38,11 +33,6 @@ public class SetupUserFragment extends Fragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		/*if (getArguments() != null)
-		{
-			mParam1 = getArguments().getString(ARG_PARAM1);
-			mParam2 = getArguments().getString(ARG_PARAM2);
-		}*/
 	}
 
 	@Override
@@ -73,6 +63,16 @@ public class SetupUserFragment extends Fragment
 		edtSurname = rootView.findViewById(R.id.edtSurname);
 	}
 
+	public String getName()
+	{
+		return edtName.getText().toString();
+	}
+
+	public String getSurname()
+	{
+		return edtSurname.getText().toString();
+	}
+
 	private void trySwipe()
 	{
 		String name = edtName.getText().toString();
@@ -92,6 +92,7 @@ public class SetupUserFragment extends Fragment
 		}
 		else
 		{
+			MainActivity.mUser = new User(0, name, surname, 0, null);
 			((SetupActivity)getActivity()).swipeRight();
 		}
 	}

@@ -6,13 +6,14 @@ public class Transaction
 {
 	private LocalDate mDate;
 	private int mAmount;
-	private String mLocation;
+	private String mLocation, mType;
 
-	Transaction(LocalDate date, int amount, String location)
+	Transaction(LocalDate date, int amount, String location, String type)
 	{
 		mDate = date;
 		mAmount = amount;
 		mLocation = location;
+		mType = type;
 	}
 
 	public LocalDate getDate()
@@ -35,13 +36,11 @@ public class Transaction
 		mAmount = amount;
 	}
 
-	public String getLocation()
-	{
-		return mLocation;
-	}
+	public String getLocation() { return mLocation; }
 
-	public void setLocation(String location)
-	{
-		mLocation = location;
-	}
+	public void setLocation(String location) { mLocation = location; }
+
+	public String getType() { return mType; }
+
+	public void setType(String type) { mLocation = type; }
 }
