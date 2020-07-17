@@ -137,6 +137,10 @@ final public class Data
         }
     }
 
+    public static void deleteFile(Context context){
+        context.deleteFile(fileName);
+    }
+
     //converts a string to be compatible with json
     private static String jsonFormat(String text)
     {
