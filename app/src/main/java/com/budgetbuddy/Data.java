@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 final public class Data
 {
-    private User mUser;
-    private Formatter mFormatter;
-    private Scanner mScanner;
-    private String json;
+    private static Formatter mFormatter;
+    private static Scanner mScanner;
+    private static String json;
+    private static Gson gson;
 
 
     private Data()
@@ -19,49 +19,54 @@ final public class Data
 
     }
 
-    //returns a User object from the json file
-    private User readUser()
+    private static void initGson()
+    {
+        if (gson == null)
+        {
+            gson = new Gson();
+        }
+    }
+
+    // Returns a User object from the json file
+    public static User readUser()
     {
         json = "";
-        Gson gson = new Gson();
+        initGson();
+
         try
         {
             mScanner = new Scanner(new File("User.json"));
         }
-        catch (Exception e){
+        catch (Exception e) {
             System.out.println("Formatter unsuccessful");
         }
+
         while (mScanner.hasNext())
         {
             json += mScanner.next();
         }
-
-
-        mUser = gson.fromJson(json, User.class);
-        return mUser;
+        return gson.fromJson(json, User.class);
     }
-    //overwrites the json file and stores a new user object
-    private void saveUser(User user){
-        mUser = user;
-
+    // Overwrites the json file and stores a new user object
+    public static void saveUser(User user)
+    {
+        initGson();
         try
         {
             mFormatter = new Formatter("User.json");
         }
-        catch (Exception e){
+
+        catch (Exception e) {
             System.out.println("Formatter unsuccessful");
         }
-
-        Gson gson = new Gson();
-        json = gson.toJson(mUser);
-
+        json = gson.toJson(user);
         mFormatter.format(json);
-
         mFormatter.close();
     }
 
-    //checks if the json file exists
-    private Boolean fileExists(){
+    // Checks if the json file exists
+    public static boolean fileExists()
+    {
         try
         {
             mScanner = new Scanner(new File("User.json"));
@@ -72,3 +77,4 @@ final public class Data
         }
     }
 }
+        
