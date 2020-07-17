@@ -3,7 +3,9 @@ package com.budgetbuddy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -11,10 +13,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
 
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -24,7 +30,6 @@ public class InputActivity extends AppCompatActivity {
     private TextInputEditText mAmount_Spent;
     private TextInputEditText mLocation;
     private int mYear, mMonth, mDayOfMonth;
-    String[] categories = {"Food", "Rent", "Leisure", "Utilities"};
 
     @Override   //chnaged theme in manifest to accomodate the new  material for the input page
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +42,13 @@ public class InputActivity extends AppCompatActivity {
         mcv_Date = findViewById(R.id.cv_Date);
         mAmount_Spent = findViewById(R.id.edt_Amount_Spent);
         mLocation = findViewById(R.id.edt_Location);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item,categories );
+        List<String> dataEntries = new ArrayList<>();
+        for (Category category : MainActivity.mUser.getCategories())
+        {
+            dataEntries.add(new String(category.getType()));
+
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item,dataEntries );
         drop_Down_Text.setAdapter(adapter);
 
 
@@ -60,10 +71,23 @@ public class InputActivity extends AppCompatActivity {
 
                 LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
-             String category = drop_Down_Text.getText().toString();
-             Int index = drop_Down_Text.
+             int index = drop_Down_Text.getListSelection();
+             String type = drop_Down_Text.getText().toString();
+             for (Category category: MainActivity.mUser.getCategories())
+             {
+                 if (category.getType()==type){
+                     category.addTransaction(transaction);
+                 }
+             }
+
+             startHomepageActivity();
             }
         });
 
+    }
+    public void startHomepageActivity()
+    {
+        Intent intent = new Intent(this, InputActivity.class);
+        startActivityForResult(intent,0);
     }
 }

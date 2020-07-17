@@ -1,6 +1,7 @@
 package com.budgetbuddy;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity
 	private AnyChartView mPieChart;
 	private Button btnAdd;
 	public static User mUser;
+
 
 	// Constants
 	public static final int REQUEST_SETUP = 0;
@@ -103,24 +106,35 @@ public class MainActivity extends AppCompatActivity
 			public void onClick(View view) {
 				startTransactionActivity();
 			}
-		});
+		});				// Show
 	}
 
 	public void setupPieChart()
 	{
-		ArrayList string = new ArrayList();
-		ArrayList amount = new ArrayList();
+
 		Pie pie = AnyChart.pie();
 		List<DataEntry> dataEntries = new ArrayList<>();
+		if (Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL)== 0)
+		{
+			//show messgae that there are no transactions made
+			TextView textView = (TextView) findViewById(R.id.textView);
+			textView.setVisibility(textView.VISIBLE);				//ITS NOT RUNNING
 
-			for(Category category:mUser.getCategories())
+
+
+		}else {
+
+
+			for (Category category : mUser.getCategories())
 			{
-				dataEntries.add(new ValueDataEntry(category.getType(), /*get amount*/));
+				dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+
 			}
 
-		pie.data(dataEntries);
-		pie.title("Monthly Spending");
-		mPieChart.setChart(pie);
+			pie.data(dataEntries);
+			pie.title("Monthly Spending");
+			mPieChart.setChart(pie);
+		}
 
 	}
 
@@ -131,8 +145,8 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void startSetupActivity()
-	{
-		Intent intent = new Intent(this, SetupActivity.class);
-		startActivityForResult(intent, REQUEST_SETUP);
-	}
+{
+	Intent intent = new Intent(this, SetupActivity.class);
+	startActivityForResult(intent, REQUEST_SETUP);
+}
 }
