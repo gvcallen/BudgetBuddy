@@ -11,30 +11,30 @@ public class Process
 
     private Process(){}
 
-    public static double calculateTotalSpentPerCategory(ArrayList<Transaction> arrayList2, int TIME_PERIOD)
+    public static int calculateTotalSpentPerCategory(ArrayList<Transaction> transactions, int periodInDays)
     {
-        double total = 0;
+        int total = 0;
 
-        for(Transaction item: arrayList2)
+        for(Transaction transaction: transactions)
         {
-            if(Period.between(LocalDate.now(), item.getDate()).getDays() <= TIME_PERIOD)
+            if(Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
             {
-                total += item.getAmount();
+                total += transaction.getAmount();
             }
         }
         return total;
     }
 
 
-    public static double calculateTotalSpentOverall(ArrayList<Category> arrayList, ArrayList<Transaction> arrayList2, int TIME_PERIOD)
+    public static int calculateTotalSpentOverall(ArrayList<Category> categories, int periodInDays)
     {
-        double overallTotal = 0;
+        int total = 0;
 
-        for(Category i: arrayList)
+        for(Category category: categories)
         {
-            overallTotal += calculateTotalSpentPerCategory(arrayList2, TIME_PERIOD);
+            total += calculateTotalSpentPerCategory(category.getTransactions(), periodInDays);
         }
-        return overallTotal;
+        return total;
     }
 
     public static ArrayList<Double> calculateDistribution(ArrayList<Category> arrayList, ArrayList<Transaction> arrayList2, int TIME_PERIOD)
