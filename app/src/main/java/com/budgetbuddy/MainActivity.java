@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.anychart.AnyChart;
@@ -34,29 +36,24 @@ public class MainActivity extends AppCompatActivity
 	public static final int REQUEST_SETUP = 0;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Create a dummy user (NOTE: This will be replaced with the user that gets loaded from file
-		ArrayList<Category> categories = new ArrayList<Category>();
-		categories.add(new Category("Food", 3000, new ArrayList<Transaction>()));
-		categories.add(new Category("Rent", 8000, new ArrayList<Transaction>()));
-		categories.add(new Category("Leisure", 1000, new ArrayList<Transaction>()));
-		categories.add(new Category("Utilities", 2000, new ArrayList<Transaction>()));
-		mUser = new User(0, "John", "Doe", 25000, categories);
 
-		// Check if user file exists. If yes, initialize this activity, else open the setup activity
 		boolean fileExists = true;
 		if (fileExists)
-		{
-			init();
 
-		}
-		else
-		{
-			startSetupActivity();
-		}
+			if (Data.fileExists(getApplicationContext())) {
+
+				mUser = Data.readUser(getApplicationContext());
+				init();
+
+
+				Toast.makeText(this, "" + mUser.getIncome(), Toast.LENGTH_LONG).show();
+
+			} else {
+				startSetupActivity();
+			}
 	}
 
 	@Override
@@ -68,6 +65,7 @@ public class MainActivity extends AppCompatActivity
 		{
 			if (resultCode == RESULT_OK)
 			{
+				Data.saveUser(mUser, getApplicationContext());
 				init();
 			}
 			else
