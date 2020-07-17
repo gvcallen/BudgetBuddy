@@ -29,7 +29,7 @@ final public class Data
             mScanner = new Scanner(new File("User.json"));
         }
         catch (Exception e){
-
+            System.out.println("Formatter unsuccessful");
         }
         while (mScanner.hasNext())
         {
@@ -49,7 +49,7 @@ final public class Data
             mFormatter = new Formatter("User.json");
         }
         catch (Exception e){
-
+            System.out.println("Formatter unsuccessful");
         }
 
         Gson gson = new Gson();
