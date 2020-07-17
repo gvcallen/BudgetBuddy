@@ -10,15 +10,29 @@ public class Process
 {
     private Process(){}
 
+    public static final int ABSOLUTE_TOTAL = -1;
+
+    // -1 may be passed for periodInDays, in which case the absolute total will be calculated
+
     public static int calculateTotalSpentPerCategory(Category category, int periodInDays)
     {
         int total = 0;
 
-        for (Transaction transaction: category.getTransactions())
+        if (periodInDays == ABSOLUTE_TOTAL)
         {
-            if (Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
+            for (Transaction transaction: category.getTransactions())
             {
                 total += transaction.getAmount();
+            }
+        }
+        else
+        {
+            for (Transaction transaction: category.getTransactions())
+            {
+                if (Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
+                {
+                    total += transaction.getAmount();
+                }
             }
         }
         return total;
