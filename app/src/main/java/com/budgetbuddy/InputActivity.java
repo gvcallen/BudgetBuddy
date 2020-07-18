@@ -52,7 +52,7 @@ public class InputActivity extends AppCompatActivity {
         drop_Down_Text.setAdapter(adapter);
 
 
-        Button mBtn_Add = (Button) findViewById(R.id.btn_Add_Input);
+        final Button mBtn_Add = (Button) findViewById(R.id.btn_Add_Input);
 
         mcv_Date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -76,15 +76,15 @@ public class InputActivity extends AppCompatActivity {
              String type = drop_Down_Text.getText().toString();
              for (Category category: MainActivity.mUser.getCategories())
              {
-                 if (category.getType()==type){
+                 if (category.getType().equals(type)){
                      category.addTransaction(transaction);
                  }
              }
 
              startHomepageActivity();
 
-             String category = drop_Down_Text.getText().toString();
-             
+
+
 
             }
         });
@@ -92,7 +92,7 @@ public class InputActivity extends AppCompatActivity {
     }
     public void startHomepageActivity()
     {
-        Intent intent = new Intent(this, InputActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivityForResult(intent,1);
     }
 }

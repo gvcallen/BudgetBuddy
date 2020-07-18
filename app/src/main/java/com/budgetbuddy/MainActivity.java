@@ -25,6 +25,7 @@ import com.anychart.charts.Pie;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 
 public class MainActivity extends AppCompatActivity
@@ -107,10 +108,8 @@ public class MainActivity extends AppCompatActivity
 			public void onClick(View view) {
 				startTransactionActivity();
 			}
-<<<<<<< HEAD
+
 		});				// Show
-=======
-		});
 
 		// Set button on click listener to open categories page
 		btnCategories = (Button) findViewById(R.id.btnCategories);
@@ -123,24 +122,23 @@ public class MainActivity extends AppCompatActivity
 
 
 
->>>>>>> be3d12f4a523e49946d5fdca8bd8910cd36df997
-	}
+
+		}
 
 	public void setupPieChart()
 	{
-
+		TextView textView = (TextView) findViewById(R.id.textView);
 		Pie pie = AnyChart.pie();
 		List<DataEntry> dataEntries = new ArrayList<>();
 		if (Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL)== 0)
 		{
 			//show messgae that there are no transactions made
-			TextView textView = (TextView) findViewById(R.id.textView);
-			textView.setVisibility(textView.VISIBLE);				//ITS NOT RUNNING
 
-
+			textView.setVisibility(textView.VISIBLE);
+			textView.setText(String.valueOf(Process.ABSOLUTE_TOTAL));//ITS NOT RUNNING=
 
 		}else {
-
+			textView.setVisibility(textView.INVISIBLE);
 
 			for (Category category : mUser.getCategories())
 			{
@@ -162,16 +160,12 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void startSetupActivity()
-<<<<<<< HEAD
+
 {
 	Intent intent = new Intent(this, SetupActivity.class);
 	startActivityForResult(intent, REQUEST_SETUP);
 }
-=======
-	{
-		Intent intent = new Intent(this, SetupActivity.class);
-		startActivityForResult(intent, REQUEST_SETUP);
-	}
+
 
 	public void startCatActivity()
 	{
@@ -179,5 +173,4 @@ public class MainActivity extends AppCompatActivity
 		startActivity(intent);
 	}
 
->>>>>>> be3d12f4a523e49946d5fdca8bd8910cd36df997
 }
