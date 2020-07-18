@@ -67,7 +67,7 @@ public class InputActivity extends AppCompatActivity {
 
         mBtn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  // if an error comes up, it might be due to the date being a long variable
+            public void onClick(View view) {
 
                 LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
@@ -88,6 +88,6 @@ public class InputActivity extends AppCompatActivity {
     public void startHomepageActivity()
     {
         Intent intent = new Intent(this, InputActivity.class);
-        startActivityForResult(intent,0);
+        startActivityForResult(intent,1);
     }
 }
