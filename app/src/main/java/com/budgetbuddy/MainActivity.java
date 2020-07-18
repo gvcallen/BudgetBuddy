@@ -34,31 +34,27 @@ public class MainActivity extends AppCompatActivity
 	private AnyChartView mPieChart;
 	private Button btnAdd;
 	private Button btnCategories;
+	private Pie mPieData = null;
 	public static User mUser;
 
 
 	// Constants
-	public static final int REQUEST_SETUP = 0;
+	public static final int REQUEST_SETUP = 0, REQUEST_ADD_TRANSACTION = 1;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
-
-		boolean fileExists = true;
-		if (fileExists)
-
-			if (Data.fileExists(getApplicationContext())) {
-
-				mUser = Data.readUser(getApplicationContext());
-				init();
-
-
-				Toast.makeText(this, "" + mUser.getIncome(), Toast.LENGTH_LONG).show();
-
-			} else {
-				startSetupActivity();
-			}
+		if (Data.fileExists(getApplicationContext()))
+		{
+			mUser = Data.readUser(getApplicationContext());
+			init();
+		}
+		else
+		{
+			startSetupActivity();
+		}
 	}
 
 	@Override
@@ -76,6 +72,13 @@ public class MainActivity extends AppCompatActivity
 			else
 			{
 				finish();
+			}
+		}
+		else if (requestCode == REQUEST_ADD_TRANSACTION)
+		{
+			if (resultCode == RESULT_OK)
+			{
+				setupPieChart();
 			}
 		}
 	}
@@ -119,52 +122,51 @@ public class MainActivity extends AppCompatActivity
 				startCatActivity();
 			}
 		});
-
-
-
-
-		}
+	}
 
 	public void setupPieChart()
 	{
 		TextView textView = (TextView) findViewById(R.id.textView);
-		Pie pie = AnyChart.pie();
-		List<DataEntry> dataEntries = new ArrayList<>();
-		if (Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL)== 0)
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+		int totalSpent = Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL);
+		if (totalSpent == 0)
 		{
-			//show messgae that there are no transactions made
-
-			textView.setVisibility(textView.VISIBLE);
-			textView.setText(String.valueOf(Process.ABSOLUTE_TOTAL));//ITS NOT RUNNING=
-
-		}else {
-			textView.setVisibility(textView.INVISIBLE);
-
+			textView.setText("You have no transactions.\nClick the '+' button to add one.");
+		}
+		else
+		{
+			boolean firstTime = false;
+			if (mPieData == null)
+			{
+				mPieData = AnyChart.pie();
+				firstTime = true;
+			}
+			textView.setText("Total spent: " + totalSpent);
 			for (Category category : mUser.getCategories())
 			{
 				dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
-
 			}
 
-			pie.data(dataEntries);
-			pie.title("Monthly Spending");
-			mPieChart.setChart(pie);
+			mPieData.data(dataEntries);
+			mPieData.title("Monthly Spending");
+			if (firstTime)
+			{
+				mPieChart.setChart(mPieData);
+			}
 		}
-
 	}
 
 	public void startTransactionActivity()
 	{
 		Intent intent = new Intent(this, InputActivity.class);
-		startActivity(intent);
+		startActivityForResult(intent, REQUEST_ADD_TRANSACTION);
 	}
 
 	public void startSetupActivity()
-
-{
-	Intent intent = new Intent(this, SetupActivity.class);
-	startActivityForResult(intent, REQUEST_SETUP);
-}
+	{
+		Intent intent = new Intent(this, SetupActivity.class);
+		startActivityForResult(intent, REQUEST_SETUP);
+	}
 
 
 	public void startCatActivity()

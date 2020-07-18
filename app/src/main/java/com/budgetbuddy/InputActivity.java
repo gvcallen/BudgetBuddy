@@ -51,6 +51,10 @@ public class InputActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item,dataEntries );
         drop_Down_Text.setAdapter(adapter);
 
+        LocalDate localDate = LocalDate.now();
+        mYear = localDate.getYear();
+        mMonth = localDate.getMonthValue();
+        mDayOfMonth = localDate.getDayOfMonth();
 
         final Button mBtn_Add = (Button) findViewById(R.id.btn_Add_Input);
 
@@ -68,8 +72,7 @@ public class InputActivity extends AppCompatActivity {
         mBtn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
+             LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
 
              int index = drop_Down_Text.getListSelection();
@@ -80,19 +83,22 @@ public class InputActivity extends AppCompatActivity {
                      category.addTransaction(transaction);
                  }
              }
-
-             startHomepageActivity();
-
-
-
-
+             sendResult(true);
             }
         });
 
     }
-    public void startHomepageActivity()
+    public void sendResult(boolean success)
     {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivityForResult(intent,1);
+        Intent resultIntent = new Intent();
+        if (success)
+        {
+            setResult(RESULT_OK, resultIntent);
+        }
+        else
+        {
+            setResult(RESULT_CANCELED, resultIntent);
+        }
+        finish();
     }
 }
