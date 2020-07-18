@@ -75,7 +75,6 @@ public class InputActivity extends AppCompatActivity {
              LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
 
-             int index = drop_Down_Text.getListSelection();
              String type = drop_Down_Text.getText().toString();
              for (Category category: MainActivity.mUser.getCategories())
              {
@@ -88,7 +87,14 @@ public class InputActivity extends AppCompatActivity {
         });
 
     }
-    public void sendResult(boolean success)
+
+    @Override
+    public void onBackPressed()
+    {
+        sendResult(false);
+    }
+
+    private void sendResult(boolean success)
     {
         Intent resultIntent = new Intent();
         if (success)
