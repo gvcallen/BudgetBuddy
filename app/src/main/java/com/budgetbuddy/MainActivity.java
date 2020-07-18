@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity
 	// Variables
 	private AnyChartView mPieChart;
 	private Button btnAdd;
+	private Button btnCategories;
 	public static User mUser;
 
 
@@ -106,7 +107,23 @@ public class MainActivity extends AppCompatActivity
 			public void onClick(View view) {
 				startTransactionActivity();
 			}
+<<<<<<< HEAD
 		});				// Show
+=======
+		});
+
+		// Set button on click listener to open categories page
+		btnCategories = (Button) findViewById(R.id.btnCategories);
+		btnCategories.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startCatActivity();
+			}
+		});
+
+
+
+>>>>>>> be3d12f4a523e49946d5fdca8bd8910cd36df997
 	}
 
 	public void setupPieChart()
@@ -145,8 +162,22 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	public void startSetupActivity()
+<<<<<<< HEAD
 {
 	Intent intent = new Intent(this, SetupActivity.class);
 	startActivityForResult(intent, REQUEST_SETUP);
 }
+=======
+	{
+		Intent intent = new Intent(this, SetupActivity.class);
+		startActivityForResult(intent, REQUEST_SETUP);
+	}
+
+	public void startCatActivity()
+	{
+		Intent intent = new Intent(this, CatActivity.class);
+		startActivity(intent);
+	}
+
+>>>>>>> be3d12f4a523e49946d5fdca8bd8910cd36df997
 }
