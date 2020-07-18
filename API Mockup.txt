@@ -51,7 +51,7 @@ Transaction
         String                  getLocation()
         void                    setLocation(String)
 
-Process
+com.budgetbuddy.Process
     Criteria:
         - Performs calculations on a list of categories and a list of transactions
         - Should be declared final, have its constructor marked private, and have all its methods marked private

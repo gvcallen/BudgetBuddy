@@ -61,7 +61,7 @@ public class InputActivity extends AppCompatActivity {
                 LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
              String category = drop_Down_Text.getText().toString();
-             Int index = drop_Down_Text.
+             int index = drop_Down_Text;
             }
         });
 
