@@ -10,12 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".CategoryActivity"
-            android:label="@string/title_activity_category"
+            android:name=".CatEditActivity"
+            android:label="@string/title_activity_cat_edit"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
+            android:name=".CategoryActivity"
+            android:label="@string/title_activity_category"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".SetupActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".TransactionActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />

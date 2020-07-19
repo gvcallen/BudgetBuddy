@@ -22,7 +22,7 @@ public class CatActivity extends AppCompatActivity
     private RecyclerView rvCat;
     private RecyclerView.Adapter rvAdapter2;
     private RecyclerView.LayoutManager rvLayoutManager2;
-    private ArrayList<Category> catList;
+    private ArrayList<Category> mCatList;
     private Button btnHome;
 
 
@@ -42,12 +42,12 @@ public class CatActivity extends AppCompatActivity
             }
         });
 
-        catList = MainActivity.mUser.getCategories();
+        mCatList = MainActivity.mUser.getCategories();
 
         rvCat = findViewById(R.id.rvCat);
         rvCat.setHasFixedSize(true);
         rvLayoutManager2 = new LinearLayoutManager(this);
-        rvAdapter2 = new CatAdapter(catList);
+        rvAdapter2 = new CatAdapter(mCatList);
 
         rvCat.setLayoutManager(rvLayoutManager2);
         rvCat.setAdapter(rvAdapter2);

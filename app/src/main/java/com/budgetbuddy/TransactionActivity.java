@@ -68,9 +68,9 @@ public class TransactionActivity extends AppCompatActivity {
             public void onClick(View view) {
              LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmountSpent.getText().toString()),mLocation.getText().toString());
-
-             int index = mCategory.getListSelection();
+             
              String type = mCategory.getText().toString();
+
              for (Category category: MainActivity.mUser.getCategories())
              {
                  if (category.getType().equals(type)){
@@ -82,7 +82,14 @@ public class TransactionActivity extends AppCompatActivity {
         });
 
     }
-    public void sendResult(boolean success)
+
+    @Override
+    public void onBackPressed()
+    {
+        sendResult(false);
+    }
+
+    private void sendResult(boolean success)
     {
         Intent resultIntent = new Intent();
         if (success)
