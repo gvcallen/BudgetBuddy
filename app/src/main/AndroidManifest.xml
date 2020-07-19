@@ -21,7 +21,7 @@
             android:name=".SetupActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".InputActivity"
+            android:name=".TransactionActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>

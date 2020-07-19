@@ -45,10 +45,8 @@ public class CatAdapter extends  RecyclerView.Adapter<CatAdapter.CatViewHolder>
     public void onBindViewHolder(@NonNull CatViewHolder holder, int position)
     {
         Category currentCat = mCatList.get(position);
-
         holder.tvType2.setText(currentCat.getType());
-        holder.tvBudget2.setText(currentCat.getBudget());
-
+        holder.tvBudget2.setText("" + currentCat.getBudget());
     }
 
     @Override
