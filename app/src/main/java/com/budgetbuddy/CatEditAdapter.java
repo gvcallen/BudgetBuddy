@@ -60,7 +60,7 @@ public class CatEditAdapter extends RecyclerView.Adapter<CatEditAdapter.CatEditV
     @NonNull
     @Override
     public CatEditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View editView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cat_item, parent, false);
+        View editView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cat_edit_item, parent, false);
         CatEditAdapter.CatEditViewHolder cevh = new CatEditAdapter.CatEditViewHolder(editView, mListener);
         return cevh;
     }
@@ -71,7 +71,7 @@ public class CatEditAdapter extends RecyclerView.Adapter<CatEditAdapter.CatEditV
         Category currentCatEdit = mCatEditList.get(position);
 
         holder.tvEditType.setText(currentCatEdit.getType());
-        holder.tvEditBud.setText(currentCatEdit.getBudget());
+        holder.tvEditBud.setText("" + currentCatEdit.getBudget());
 
     }
 
