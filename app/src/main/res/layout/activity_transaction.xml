@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InputActivity">
+    tools:context=".TransactionActivity">
 
 
     <include
@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="-17dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_InputLayout_1"
+        android:id="@+id/txtInputLayout1"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_Amount_Spent"
+            android:id="@+id/edtAmountSpent"
             android:layout_width="345dp"
             android:layout_height="54dp"
             android:inputType="number" />
@@ -45,7 +45,7 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_InputLayout_3"
+        android:id="@+id/txtInputLayout3"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/edt_Location"
+            android:id="@+id/edtLocation"
             android:layout_width="345dp"
             android:layout_height="54dp"
              />
@@ -73,7 +73,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txt_InputLayout_2"
+        android:id="@+id/txtInputLayout2"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
 
 
         <AutoCompleteTextView
-            android:id="@+id/dropdown_text"
+            android:id="@+id/cmbCategory"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:editable="false" />
@@ -102,13 +102,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/txt_Heading_Input"
+        android:id="@+id/txtHeadingInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Transaction Details"
         android:textColor="#03DAC5"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/txt_InputLayout_2"
+        app:layout_constraintBottom_toTopOf="@+id/txtInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
         app:layout_constraintVertical_bias="0.706" />
 
     <Button
-        android:id="@+id/btn_Add_Input"
+        android:id="@+id/btnAddInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="163dp"
@@ -131,10 +131,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_Date" />
+        app:layout_constraintTop_toBottomOf="@+id/cvDate" />
 
     <CalendarView
-        android:id="@+id/cv_Date"
+        android:id="@+id/cvDate"
         android:layout_width="351dp"
         android:layout_height="305dp"
         app:layout_constraintBottom_toBottomOf="parent"

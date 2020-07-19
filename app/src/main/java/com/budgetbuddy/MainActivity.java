@@ -1,7 +1,6 @@
 package com.budgetbuddy;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,10 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,10 +19,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 
 
 public class MainActivity extends AppCompatActivity
@@ -34,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 	private AnyChartView mPieChart;
 	private Button btnAdd;
 	private Button btnCategories;
+	private TextView textView;
 	private Pie mPieData = null;
 	public static User mUser;
 
@@ -96,8 +91,9 @@ public class MainActivity extends AppCompatActivity
 	{
 		setContentView(R.layout.activity_main);
 
+		findViewById();
+
 		// Implement pie-chart
-		mPieChart = findViewById(R.id.piChart);
 		setupPieChart();
 
 		// Create toolbar
@@ -105,17 +101,17 @@ public class MainActivity extends AppCompatActivity
 		setSupportActionBar(toolbar);
 
 		// Set buttons on click listener to open transaction activity
-		btnAdd = (Button)findViewById(R.id.btnAdd);
+
 		btnAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startTransactionActivity();
 			}
 
-		});				// Show
+		});
 
 		// Set button on click listener to open categories page
-		btnCategories = (Button) findViewById(R.id.btnCategories);
+
 		btnCategories.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -126,7 +122,8 @@ public class MainActivity extends AppCompatActivity
 
 	public void setupPieChart()
 	{
-		TextView textView = (TextView) findViewById(R.id.textView);
+
+
 		ArrayList<DataEntry> dataEntries = new ArrayList<>();
 		int totalSpent = Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL);
 		if (totalSpent == 0)
@@ -135,30 +132,24 @@ public class MainActivity extends AppCompatActivity
 		}
 		else
 		{
-			boolean firstTime = false;
+			textView.setText("Total spent: " + totalSpent);
+
 			if (mPieData == null)
 			{
-				mPieData = AnyChart.pie();
-				firstTime = true;
+			firstTimeUsingPieChart();
 			}
-			textView.setText("Total spent: " + totalSpent);
-			for (Category category : mUser.getCategories())
+			else
 			{
-				dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+			refreshingPieChart();
 			}
 
-			mPieData.data(dataEntries);
-			mPieData.title("Monthly Spending");
-			if (firstTime)
-			{
-				mPieChart.setChart(mPieData);
-			}
+
 		}
 	}
 
 	public void startTransactionActivity()
 	{
-		Intent intent = new Intent(this, InputActivity.class);
+		Intent intent = new Intent(this, TransactionActivity.class);
 		startActivityForResult(intent, REQUEST_ADD_TRANSACTION);
 	}
 
@@ -175,4 +166,40 @@ public class MainActivity extends AppCompatActivity
 		startActivity(intent);
 	}
 
+	public void firstTimeUsingPieChart()
+	{
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+		mPieData = AnyChart.pie();
+
+		for (Category category : mUser.getCategories())
+		{
+			dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+		}
+
+		mPieData.data(dataEntries);
+		mPieData.title("Monthly Spending");
+		mPieChart.setChart(mPieData);
+	}
+
+	public void refreshingPieChart()
+	{
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+
+		for (Category category : mUser.getCategories())
+		{
+			dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+		}
+
+		mPieData.data(dataEntries);
+		mPieData.title("Monthly Spending");
+	}
+
+
+	public void findViewById()
+	{
+		btnAdd = (Button)findViewById(R.id.btnAdd);
+		textView =  findViewById(R.id.textView);
+		btnCategories = (Button) findViewById(R.id.btnCategories);
+		mPieChart = findViewById(R.id.piChart);
+	}
 }
