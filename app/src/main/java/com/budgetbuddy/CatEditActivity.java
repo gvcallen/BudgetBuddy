@@ -36,6 +36,8 @@ public class CatEditActivity extends AppCompatActivity
 
         buildRecyclerView();
 
+
+
         btnBack = (Button) findViewById(R.id.btnBack);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +56,7 @@ public class CatEditActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                mCat = new Category(edtAddType.getText().toString(), Integer.parseInt(edtAddBud.getText().toString()), null);
                 addCat(mCat);
 
             }
@@ -70,7 +73,7 @@ public class CatEditActivity extends AppCompatActivity
     public void buildRecyclerView()
     {
         rvEditCat = findViewById(R.id.rvCatEdit);
-        rvEditCat.setHasFixedSize(true);
+        //rvEditCat.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(this);
         rvEditAdapter = new CatEditAdapter(mCatList);
 

@@ -18,7 +18,7 @@ public class CatEditAdapter extends RecyclerView.Adapter<CatEditAdapter.CatEditV
 
     public interface OnItemClickListener
     {
-        void onDeleteClick(int positio);
+        void onDeleteClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener)
@@ -55,13 +55,14 @@ public class CatEditAdapter extends RecyclerView.Adapter<CatEditAdapter.CatEditV
             });
         }
     }
-    public CatEditAdapter(ArrayList<Category> catlist) {mCatEditList = catlist;}
+    public CatEditAdapter(ArrayList<Category> catList) {mCatEditList = catList;}
 
     @NonNull
     @Override
     public CatEditViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View editView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cat_edit_item, parent, false);
-        CatEditAdapter.CatEditViewHolder cevh = new CatEditAdapter.CatEditViewHolder(editView, mListener);
+        //CatEditAdapter.CatEditViewHolder cevh = new CatEditAdapter.CatEditViewHolder(editView, mListener);
+        CatEditViewHolder cevh = new CatEditViewHolder(editView, mListener);
         return cevh;
     }
 
