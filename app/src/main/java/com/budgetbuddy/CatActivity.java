@@ -18,16 +18,12 @@ import java.util.ArrayList;
 
 public class CatActivity extends AppCompatActivity
 {
-
     private RecyclerView rvCat;
     private RecyclerView.Adapter rvAdapter2;
     private RecyclerView.LayoutManager rvLayoutManager2;
     private ArrayList<Category> mCatList;
     private Button btnHome;
-
-
-
-
+    private Button btnEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +38,16 @@ public class CatActivity extends AppCompatActivity
             }
         });
 
+        btnEdit = findViewById(R.id.btnEdit);
+        btnEdit.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                startEditActivity();
+            }
+        });
+
         mCatList = MainActivity.mUser.getCategories();
 
         rvCat = findViewById(R.id.rvCat);
@@ -51,12 +57,17 @@ public class CatActivity extends AppCompatActivity
 
         rvCat.setLayoutManager(rvLayoutManager2);
         rvCat.setAdapter(rvAdapter2);
-
-
     }
+
     public void startMainActivity()
     {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void startEditActivity()
+    {
+        Intent intent = new Intent(this, CatEditActivity.class);
         startActivity(intent);
     }
 }

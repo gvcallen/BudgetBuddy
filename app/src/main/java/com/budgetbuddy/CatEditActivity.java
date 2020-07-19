@@ -47,7 +47,7 @@ public class CatEditActivity extends AppCompatActivity
         btnAddCat = findViewById(R.id.btnAddCat);
         edtAddType = findViewById(R.id.edtAddType);
         edtAddBud = findViewById(R.id.edtAddBud);
-        mCat = new Category(edtAddType.getText().toString(), Integer.parseInt(edtAddBud.getText().toString()), null);
+        //mCat = new Category(edtAddType.getText().toString(), Integer.parseInt(edtAddBud.getText().toString()), null);
 
 
         btnAddCat.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +64,7 @@ public class CatEditActivity extends AppCompatActivity
 
     public void addCat(Category c)
     {
-        mCatList.add(mCatList.size()-1, c);
+        mCatList.add(c);
         rvEditAdapter.notifyItemInserted(mCatList.size()-1);
     }
     public void buildRecyclerView()
