@@ -3,7 +3,9 @@ package com.budgetbuddy;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
@@ -11,10 +13,14 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CalendarView;
 
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InputActivity extends AppCompatActivity {
 
@@ -24,7 +30,6 @@ public class InputActivity extends AppCompatActivity {
     private TextInputEditText mAmount_Spent;
     private TextInputEditText mLocation;
     private int mYear, mMonth, mDayOfMonth;
-    String[] categories = {"Food", "Rent", "Leisure", "Utilities"};
 
     @Override   //chnaged theme in manifest to accomodate the new  material for the input page
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +42,21 @@ public class InputActivity extends AppCompatActivity {
         mcv_Date = findViewById(R.id.cv_Date);
         mAmount_Spent = findViewById(R.id.edt_Amount_Spent);
         mLocation = findViewById(R.id.edt_Location);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item,categories );
+        List<String> dataEntries = new ArrayList<>();
+        for (Category category : MainActivity.mUser.getCategories())
+        {
+            dataEntries.add(new String(category.getType()));
+
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>( InputActivity.this, R.layout.dropdown_item,dataEntries );
         drop_Down_Text.setAdapter(adapter);
 
+        LocalDate localDate = LocalDate.now();
+        mYear = localDate.getYear();
+        mMonth = localDate.getMonthValue();
+        mDayOfMonth = localDate.getDayOfMonth();
 
-        Button mBtn_Add = (Button) findViewById(R.id.btn_Add_Input);
+        final Button mBtn_Add = (Button) findViewById(R.id.btn_Add_Input);
 
         mcv_Date.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -56,14 +71,40 @@ public class InputActivity extends AppCompatActivity {
 
         mBtn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {  // if an error comes up, it might be due to the date being a long variable
-
-                LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
+            public void onClick(View view) {
+             LocalDate localDate =LocalDate.now().withDayOfMonth(mDayOfMonth).withMonth(mMonth).withYear(mYear);
              Transaction transaction = new Transaction(localDate,Integer.parseInt(mAmount_Spent.getText().toString()),mLocation.getText().toString());
-             String category = drop_Down_Text.getText().toString();
-             int index = drop_Down_Text;
+
+             String type = drop_Down_Text.getText().toString();
+             for (Category category: MainActivity.mUser.getCategories())
+             {
+                 if (category.getType().equals(type)){
+                     category.addTransaction(transaction);
+                 }
+             }
+             sendResult(true);
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        sendResult(false);
+    }
+
+    private void sendResult(boolean success)
+    {
+        Intent resultIntent = new Intent();
+        if (success)
+        {
+            setResult(RESULT_OK, resultIntent);
+        }
+        else
+        {
+            setResult(RESULT_CANCELED, resultIntent);
+        }
+        finish();
     }
 }
