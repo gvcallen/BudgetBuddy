@@ -8,9 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -20,9 +19,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity
@@ -31,30 +28,28 @@ public class MainActivity extends AppCompatActivity
 	private AnyChartView mPieChart;
 	private Button btnAdd;
 	private Button btnCategories;
+	private TextView textView;
+	private Pie mPieData = null;
 	public static User mUser;
 
+
 	// Constants
-	public static final int REQUEST_SETUP = 0;
+	public static final int REQUEST_SETUP = 0, REQUEST_ADD_TRANSACTION = 1;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 
-
-		boolean fileExists = true;
-		if (fileExists)
-
-			if (Data.fileExists(getApplicationContext())) {
-
-				mUser = Data.readUser(getApplicationContext());
-				init();
-
-
-				Toast.makeText(this, "" + mUser.getIncome(), Toast.LENGTH_LONG).show();
-
-			} else {
-				startSetupActivity();
-			}
+		if (Data.fileExists(getApplicationContext()))
+		{
+			mUser = Data.readUser(getApplicationContext());
+			init();
+		}
+		else
+		{
+			startSetupActivity();
+		}
 	}
 
 	@Override
@@ -74,6 +69,13 @@ public class MainActivity extends AppCompatActivity
 				finish();
 			}
 		}
+		else if (requestCode == REQUEST_ADD_TRANSACTION)
+		{
+			if (resultCode == RESULT_OK)
+			{
+				setupPieChart();
+			}
+		}
 	}
 
 	@Override
@@ -89,8 +91,9 @@ public class MainActivity extends AppCompatActivity
 	{
 		setContentView(R.layout.activity_main);
 
+		findViewById();
+
 		// Implement pie-chart
-		mPieChart = findViewById(R.id.piChart);
 		setupPieChart();
 
 		// Create toolbar
@@ -98,49 +101,56 @@ public class MainActivity extends AppCompatActivity
 		setSupportActionBar(toolbar);
 
 		// Set buttons on click listener to open transaction activity
-		btnAdd = (Button)findViewById(R.id.btnAdd);
+
 		btnAdd.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startTransactionActivity();
 			}
+
 		});
 
 		// Set button on click listener to open categories page
-		btnCategories = (Button) findViewById(R.id.btnCategories);
+
 		btnCategories.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				startCatActivity();
 			}
 		});
-
-
-
 	}
 
 	public void setupPieChart()
 	{
-		ArrayList string = new ArrayList();
-		ArrayList amount = new ArrayList();
-		Pie pie = AnyChart.pie();
-		List<DataEntry> dataEntries = new ArrayList<>();
 
-			for(Category category:mUser.getCategories())
+
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+		int totalSpent = Process.calculateTotalSpentOverall(mUser.getCategories(), Process.ABSOLUTE_TOTAL);
+		if (totalSpent == 0)
+		{
+			textView.setText("You have no transactions.\nClick the '+' button to add one.");
+		}
+		else
+		{
+			textView.setText("Total spent: " + totalSpent);
+
+			if (mPieData == null)
 			{
-				dataEntries.add(new ValueDataEntry(category.getType(), /*get amount*/));
+			firstTimeUsingPieChart();
+			}
+			else
+			{
+			refreshingPieChart();
 			}
 
-		pie.data(dataEntries);
-		pie.title("Monthly Spending");
-		mPieChart.setChart(pie);
 
+		}
 	}
 
 	public void startTransactionActivity()
 	{
-		Intent intent = new Intent(this, InputActivity.class);
-		startActivity(intent);
+		Intent intent = new Intent(this, TransactionActivity.class);
+		startActivityForResult(intent, REQUEST_ADD_TRANSACTION);
 	}
 
 	public void startSetupActivity()
@@ -149,10 +159,47 @@ public class MainActivity extends AppCompatActivity
 		startActivityForResult(intent, REQUEST_SETUP);
 	}
 
+
 	public void startCatActivity()
 	{
 		Intent intent = new Intent(this, CatActivity.class);
 		startActivity(intent);
 	}
 
+	public void firstTimeUsingPieChart()
+	{
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+		mPieData = AnyChart.pie();
+
+		for (Category category : mUser.getCategories())
+		{
+			dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+		}
+
+		mPieData.data(dataEntries);
+		mPieData.title("Monthly Spending");
+		mPieChart.setChart(mPieData);
+	}
+
+	public void refreshingPieChart()
+	{
+		ArrayList<DataEntry> dataEntries = new ArrayList<>();
+
+		for (Category category : mUser.getCategories())
+		{
+			dataEntries.add(new ValueDataEntry(category.getType(), Process.calculateTotalSpentPerCategory(category, Process.ABSOLUTE_TOTAL)));
+		}
+
+		mPieData.data(dataEntries);
+		mPieData.title("Monthly Spending");
+	}
+
+
+	public void findViewById()
+	{
+		btnAdd = (Button)findViewById(R.id.btnAdd);
+		textView =  findViewById(R.id.textView);
+		btnCategories = (Button) findViewById(R.id.btnCategories);
+		mPieChart = findViewById(R.id.piChart);
+	}
 }

@@ -11,8 +11,11 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SatisticActiviy"
-            android:label="@string/title_activity_satistic_activiy"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="@string/title_activity_satistic_activiy"/>
+        <activity
+            android:name=".CatEditActivity"
+            android:label="@string/title_activity_cat_edit"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".CategoryActivity"
             android:label="@string/title_activity_category"
@@ -21,7 +24,7 @@
             android:name=".SetupActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".InputActivity"
+            android:name=".TransactionActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
