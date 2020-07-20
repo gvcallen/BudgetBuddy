@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -218,5 +219,13 @@ public class MainActivity extends AppCompatActivity
 		mPieChart = findViewById(R.id.piChart);
 		btnStats = (Button) findViewById(R.id.btnStatistics);
 	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Data.saveUser(mUser,this);
+		Toast.makeText(this,"User Saved",Toast.LENGTH_LONG).show();
+	}
+
 
 }
