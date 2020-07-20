@@ -73,7 +73,7 @@ public class CatEditActivity extends AppCompatActivity
     public void buildRecyclerView()
     {
         rvEditCat = findViewById(R.id.rvCatEdit);
-        //rvEditCat.setHasFixedSize(true);
+        rvEditCat.setHasFixedSize(true);
         rvLayoutManager = new LinearLayoutManager(this);
         rvEditAdapter = new CatEditAdapter(mCatList);
 
