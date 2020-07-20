@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.budgetbuddy.R;
+import com.budgetbuddy.StatFrag;
 import com.budgetbuddy.StatGraphFrag;
 
 /**
@@ -34,7 +35,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 fragment = StatGraphFrag.newInstance();
                 break;
             case 1:
-                fragment = StatGraphFrag.newInstance();
+                fragment = StatFrag.newInstance();
                 break;
         }
         return fragment;

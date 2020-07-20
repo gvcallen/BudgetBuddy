@@ -17,4 +17,9 @@
     <string name="tab_text_1">Budget Distribution</string>
     <string name="tab_text_2">Stats</string>
     <string name="title_activity_cat_edit">CatEditActivity</string>
+
+    <string name="moneySaved">Category with the most money saved: </string>
+    <string name="moneySpent">Category with most money spent:</string>
+    <string name="mostTransactions">Category with the most transactions:</string>
+    <string name="expensiveTransaction">Most expensive transaction:</string>
 </resources>

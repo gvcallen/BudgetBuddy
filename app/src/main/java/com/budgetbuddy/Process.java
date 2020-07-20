@@ -18,23 +18,15 @@ public class Process
     {
         int total = 0;
 
-        if (periodInDays == ABSOLUTE_TOTAL)
+        for (Transaction transaction: category.getTransactions())
         {
-            for (Transaction transaction: category.getTransactions())
+            if (isTransactionInPeriod(transaction,periodInDays))
             {
                 total += transaction.getAmount();
             }
         }
-        else
-        {
-            for (Transaction transaction: category.getTransactions())
-            {
-                if (Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
-                {
-                    total += transaction.getAmount();
-                }
-            }
-        }
+
+
         return total;
     }
 
@@ -70,6 +62,126 @@ public class Process
         }
 
         return fractionDistribution;
+    }
+
+    public static Category mostSaved(ArrayList<Category> categories, int periodInDays)
+    {
+        Category tempCategory = null;
+        double temp = 0;
+        double amountSaved = 0;
+        for (Category category: categories)
+        {
+            amountSaved = category.getBudget()-calculateTotalSpentPerCategory(category,periodInDays);
+            if (amountSaved > temp)
+            {
+                temp = amountSaved;
+                tempCategory = category;
+            }
+        }
+        return tempCategory;
+    }
+
+    public static Category mostSpent(ArrayList<Category> categories, int periodInDays)
+    {
+        Category tempCategory = null;
+        double temp = 0;
+        double amountSpent = 0;
+        for (Category category: categories)
+        {
+            amountSpent = calculateTotalSpentPerCategory(category,periodInDays);
+            if (amountSpent > temp)
+            {
+                temp = amountSpent;
+                tempCategory = category;
+            }
+        }
+        return tempCategory;
+    }
+
+    public static Category mostTransactions(ArrayList<Category> categories, int periodInDays)
+    {
+        Category tempCategory = null;
+        double temp = 0;
+        double numTransactions = 0;
+
+        for (Category category: categories)
+        {
+            numTransactions = numTransactionsInPeriod(category, periodInDays);
+            if (numTransactions > temp)
+            {
+                temp = numTransactions;
+                tempCategory = category;
+            }
+        }
+        return tempCategory;
+    }
+
+    public static Category categoryMostExpensiveTransaction (ArrayList<Category> categories, int periodInDays)
+    {
+        Category tempCategory = null;
+        double temp = 0;
+        double mostExpensiveTransactionAmount = 0;
+
+        for (Category category: categories)
+        {
+            mostExpensiveTransactionAmount = mostExpensiveTransactionInCategory(category, periodInDays).getAmount();
+            if (mostExpensiveTransactionAmount > temp)
+            {
+                temp = mostExpensiveTransactionAmount;
+                tempCategory = category;
+            }
+        }
+        return tempCategory;
+    }
+
+    public static Transaction mostExpensiveTransactionInCategory(Category category, int periodInDays)
+    {
+        Transaction tempTransaction = null;
+        double temp = 0;
+        double transactionAmount = 0;
+        for (Transaction transaction: category.getTransactions())
+        {
+            transactionAmount = transaction.getAmount();
+            if ((transactionAmount > temp) && (isTransactionInPeriod(transaction, periodInDays)))
+            {
+                temp = transactionAmount;
+                tempTransaction = transaction;
+            }
+        }
+        return tempTransaction;
+    }
+
+    public static int numTransactionsInPeriod(Category category, int periodInDays)
+    {
+        int numTransactions=0;
+        for (Transaction transaction: category.getTransactions())
+        {
+            if (isTransactionInPeriod(transaction, periodInDays))
+            {
+                numTransactions++;
+            }
+        }
+
+        return numTransactions;
+    }
+
+    public static boolean isTransactionInPeriod (Transaction transaction, int periodInDays)
+    {
+        if (periodInDays == ABSOLUTE_TOTAL)
+        {
+            return true;
+        }
+        else
+        {
+            if (Period.between(LocalDate.now(), transaction.getDate()).getDays() <= periodInDays)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
 
