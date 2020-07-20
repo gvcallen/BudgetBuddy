@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity
 	private AnyChartView mPieChart;
 	private Button btnAdd;
 	private Button btnCategories;
+	private Button btnStats;
 	private TextView textView;
 	private Pie mPieData = null;
 	public static User mUser;
@@ -118,6 +119,15 @@ public class MainActivity extends AppCompatActivity
 				startCatActivity();
 			}
 		});
+
+		//Set button on click listener to open statistics page
+
+		btnStats.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				startStatActivity();
+			}
+		});
 	}
 
 	public void setupPieChart()
@@ -166,6 +176,11 @@ public class MainActivity extends AppCompatActivity
 		startActivity(intent);
 	}
 
+	public void startStatActivity() {
+			Intent intent = new Intent(this, StatisticActivity.class);
+			startActivity(intent);
+	}
+
 	public void firstTimeUsingPieChart()
 	{
 		ArrayList<DataEntry> dataEntries = new ArrayList<>();
@@ -201,5 +216,7 @@ public class MainActivity extends AppCompatActivity
 		textView =  findViewById(R.id.textView);
 		btnCategories = (Button) findViewById(R.id.btnCategories);
 		mPieChart = findViewById(R.id.piChart);
+		btnStats = (Button) findViewById(R.id.btnStatistics);
 	}
+
 }

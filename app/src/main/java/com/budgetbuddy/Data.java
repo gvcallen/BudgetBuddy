@@ -35,7 +35,6 @@ final public class Data
     {
         initGson();
         json = loadTextFromFile(fileName, context);
-        json=jsonFormat(json);
         return gson.fromJson(json,User.class);
     }
     
@@ -141,12 +140,6 @@ final public class Data
         context.deleteFile(fileName);
     }
 
-    //converts a string to be compatible with json
-    private static String jsonFormat(String text)
-    {
-        text = text.replaceAll("\"","\\\"");
-        return text;
-    }
 
     public static void setFileName(String newFileName)
     {
