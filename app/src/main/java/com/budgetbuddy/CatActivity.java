@@ -3,11 +3,7 @@ package com.budgetbuddy;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +15,7 @@ import java.util.ArrayList;
 public class CatActivity extends AppCompatActivity
 {
     private RecyclerView rvCat;
-    private RecyclerView.Adapter rvAdapter2;
+    private CatAdapter rvAdapter2;
     private RecyclerView.LayoutManager rvLayoutManager2;
     private ArrayList<Category> mCatList;
     private Button btnHome;
@@ -50,13 +46,7 @@ public class CatActivity extends AppCompatActivity
 
         mCatList = MainActivity.mUser.getCategories();
 
-        rvCat = findViewById(R.id.rvCat);
-        rvCat.setHasFixedSize(true);
-        rvLayoutManager2 = new LinearLayoutManager(this);
-        rvAdapter2 = new CatAdapter(mCatList);
-
-        rvCat.setLayoutManager(rvLayoutManager2);
-        rvCat.setAdapter(rvAdapter2);
+        buildRecyclerView();
     }
 
     public void startMainActivity()
@@ -70,4 +60,29 @@ public class CatActivity extends AppCompatActivity
         Intent intent = new Intent(this, CatEditActivity.class);
         startActivity(intent);
     }
+
+    public void startTransListActivity(int position)
+    {
+        Intent intent = new Intent(this,TransactionListActivity.class);
+        intent.putExtra("CATEGORY_POSITION",position);
+        startActivity(intent);
+    }
+
+    public void buildRecyclerView()
+    {
+        rvCat = findViewById(R.id.rvCat);
+        rvCat.setHasFixedSize(true);
+        rvLayoutManager2 = new LinearLayoutManager(this);
+        rvAdapter2 = new CatAdapter(mCatList);
+
+        rvCat.setLayoutManager(rvLayoutManager2);
+        rvCat.setAdapter(rvAdapter2);
+        rvAdapter2.setOnItemClickListener(new CatAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                startTransListActivity(position);
+            }
+        });
+    }
+
 }

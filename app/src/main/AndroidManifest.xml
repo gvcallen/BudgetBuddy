@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".TransactionListActivity"></activity>
         <activity
             android:name=".StatisticActivity"
-            android:label="@string/title_activity_satistic_activiy"/>
+            android:label="@string/title_activity_satistic_activiy" />
         <activity
             android:name=".CatEditActivity"
             android:label="@string/title_activity_cat_edit"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".CatActivity"
             android:label="@string/title_activity_category"
